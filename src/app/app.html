@@ -405,6 +405,8 @@
 
     <button class="nav-item" type="button" (click)="openQuiz()">🎮 Quiz</button>
 
+    <button class="nav-item" type="button" (click)="openAbout()">👩‍💻 Sobre mim</button>
+
     <button class="clear-btn" type="button" (click)="clearFilter()" [disabled]="!hasActiveFilter()">
       Limpar filtro e mostrar todos
     </button>
@@ -544,6 +546,50 @@
       } @else if (isDetailsLoading()) {
         <p class="modal__loading">{{ t('loading') }}</p>
       }
+    </section>
+  </div>
+}
+
+@if (isAboutOpen()) {
+  <div class="modal-overlay" (click)="closeAbout()">
+    <section class="modal modal--about" (click)="$event.stopPropagation()">
+      <button class="modal__close" type="button" aria-label="Fechar" (click)="closeAbout()">
+        &times;
+      </button>
+
+      <span class="about__badge">👩‍💻 Sobre mim</span>
+      <h2 class="about__name">Ana Clara Lima Ribeiro</h2>
+      <p class="about__role">Desenvolvedora Front-end em formação</p>
+
+      <p class="about__paragraph">
+        Sou técnica em Mecatrônica pelo SENAI e estudante de Engenharia de Software na UniAteneu.
+        Hoje integro o Squad Proenergia no Hackathon Proenergia Summit 2026, unindo a base técnica
+        de automação industrial e IoT ao universo das interfaces web modernas.
+      </p>
+      <p class="about__paragraph">
+        Minha formação em Mecatrônica me ensinou a enxergar sistemas por inteiro — do sensor ao
+        código. O que me move é construir interfaces que combinam essa precisão técnica com um
+        design que todas as pessoas consigam usar.
+      </p>
+      <p class="about__paragraph">
+        Acredito que a web precisa ser um lugar para todo mundo, por isso estudo acessibilidade e
+        inclusão todos os dias — para que nenhuma pessoa fique de fora da experiência digital.
+      </p>
+
+      <h3 class="about__title">Minhas habilidades</h3>
+      <div class="about__chips">
+        @for (skill of aboutSkills; track skill) {
+          <span class="about__chip">{{ skill }}</span>
+        }
+      </div>
+
+      <h3 class="about__title">Sobre este projeto</h3>
+      <p class="about__paragraph">
+        Esta Pokédex é uma SPA feita com Angular (TypeScript e SCSS) que consome a PokéAPI: busca
+        global por nome ou número, filtros por tipo/geração/região, favoritos, comparação de
+        Pokémon, destaques por geração e um minigame de "quem é esse Pokémon?" com recorde salvo —
+        tudo com acessibilidade e o suporte de libras (VLibras).
+      </p>
     </section>
   </div>
 }

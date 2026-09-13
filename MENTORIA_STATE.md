@@ -280,6 +280,14 @@
   - `getPokemonNameList()`: cache só com espécies → busca por nome não retorna formas.
   - `searchPokemonGlobal()`: busca numérica só aceita 1–1025; acima disso retorna vazio. Buscar "1001" → wo-chien (#1001) corretamente.
 
+### Fase 36 - Menu "Sobre mim"
+
+- **src/app/app.html + app.ts + app.scss**: item **👩‍💻 Sobre mim** no menu lateral abre um modal com a apresentação da Ana Clara (dados extraídos do currículo digital claralimadev.github.io/curriculo-ana):
+  - Formação: técnica em Mecatrônica (SENAI), Engenharia de Software (UniAteneu), Squad Proenergia no Hackathon Proenergia Summit 2026.
+  - Foco: frontend (Angular 22, TypeScript, SCSS) + acessibilidade e inclusão.
+  - `aboutSkills` (chips) e seção "Sobre este projeto" descrevendo o app.
+  - **Sem contato**, conforme pedido.
+
 ---
 
 ## Status Final

@@ -64,6 +64,8 @@ export class App {
   readonly isClassificationOpen = signal(false);
   readonly isHighlightsOpen = signal(false);
   readonly isQuizOpen = signal(false);
+
+  readonly isAboutOpen = signal(false);
   readonly classificationTab = signal<'type' | 'generation' | 'region'>('type');
   readonly selectedLanguage = signal<Locale>(this.initialLanguage());
   readonly pokemonTypes = TYPE_LIST;
@@ -71,6 +73,17 @@ export class App {
   readonly regions = REGIONS;
   readonly highlights = GENERATION_HIGHLIGHTS;
   readonly skeletonItems = Array.from({ length: PAGE_LIMIT });
+  readonly aboutSkills = [
+    'HTML & CSS / SCSS',
+    'JavaScript',
+    'Angular 22',
+    'TypeScript',
+    'Python (lógica & algoritmos)',
+    'Arduino & C/C++',
+    'Sensores & IoT',
+    'Automação Industrial (CLP, SCADA, Robótica)',
+    'Acessibilidade Web',
+  ];
 
   private offset = 0;
   private loadToken = 0;
@@ -159,6 +172,15 @@ export class App {
 
   closeQuiz(): void {
     this.isQuizOpen.set(false);
+  }
+
+  openAbout(): void {
+    this.closeMenu();
+    this.isAboutOpen.set(true);
+  }
+
+  closeAbout(): void {
+    this.isAboutOpen.set(false);
   }
 
   setClassificationTab(tab: 'type' | 'generation' | 'region'): void {

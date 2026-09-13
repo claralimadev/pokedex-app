@@ -439,6 +439,68 @@ body.light-theme .bg-pokeball-video {
   }
 }
 
+.modal__about {
+  width: min(100%, 460px);
+  text-align: left;
+  align-items: flex-start;
+}
+
+.about__badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--color-accent);
+  background-color: var(--color-accent-soft);
+  border-radius: 999px;
+}
+
+.about__name {
+  margin: 0.25rem 0 0;
+  font-size: 1.35rem;
+  color: var(--color-text);
+}
+
+.about__role {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-accent);
+}
+
+.about__paragraph {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  text-align: justify;
+  color: var(--color-text);
+}
+
+.about__title {
+  margin: 0.75rem 0 0.5rem;
+  font-size: 0.98rem;
+  color: var(--color-text);
+  border-bottom: 1px solid var(--color-border-soft);
+  padding-bottom: 0.25rem;
+  width: 100%;
+}
+
+.about__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.about__chip {
+  padding: 0.25rem 0.65rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--color-text);
+  background-color: var(--color-surface-muted);
+  border: 1px solid var(--color-border-soft);
+  border-radius: 999px;
+}
+
 .modal__id {
   margin-top: 0.5rem;
   font-size: 0.85rem;
