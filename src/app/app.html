@@ -1,0 +1,553 @@
+<div class="app-shell">
+  <video class="bg-pokeball-video" autoplay loop muted playsinline aria-hidden="true">
+    <source src="assets/videos/pokeball-bg.mp4" type="video/mp4" />
+  </video>
+
+  <header class="topbar">
+    <button class="menu-toggle" type="button" aria-label="Abrir menu" (click)="toggleMenu()">
+      <svg class="dugtrio-icon" viewBox="0 0 150 84" aria-hidden="true">
+        <g>
+          <ellipse cx="27" cy="42" rx="26" ry="24" fill="#a9702c" />
+          <ellipse cx="18" cy="38" rx="4" ry="5" fill="#2b1a0e" />
+          <ellipse cx="36" cy="38" rx="4" ry="5" fill="#2b1a0e" />
+          <circle cx="17" cy="36" r="1.3" fill="#ffffff" />
+          <circle cx="35" cy="36" r="1.3" fill="#ffffff" />
+          <ellipse cx="27" cy="47" rx="3" ry="4" fill="#3d2410" />
+          <path
+            d="M24 52 Q27 55 30 52"
+            stroke="#3d2410"
+            stroke-width="2"
+            fill="none"
+            stroke-linecap="round"
+          />
+        </g>
+        <g>
+          <ellipse cx="75" cy="42" rx="26" ry="24" fill="#b47c33" />
+          <ellipse cx="66" cy="38" rx="4" ry="5" fill="#2b1a0e" />
+          <ellipse cx="84" cy="38" rx="4" ry="5" fill="#2b1a0e" />
+          <circle cx="65" cy="36" r="1.3" fill="#ffffff" />
+          <circle cx="83" cy="36" r="1.3" fill="#ffffff" />
+          <ellipse cx="75" cy="47" rx="3" ry="4" fill="#3d2410" />
+          <path
+            d="M72 52 Q75 55 78 52"
+            stroke="#3d2410"
+            stroke-width="2"
+            fill="none"
+            stroke-linecap="round"
+          />
+        </g>
+        <g>
+          <ellipse cx="123" cy="42" rx="26" ry="24" fill="#9d6226" />
+          <ellipse cx="114" cy="38" rx="4" ry="5" fill="#2b1a0e" />
+          <ellipse cx="132" cy="38" rx="4" ry="5" fill="#2b1a0e" />
+          <circle cx="113" cy="36" r="1.3" fill="#ffffff" />
+          <circle cx="131" cy="36" r="1.3" fill="#ffffff" />
+          <ellipse cx="123" cy="47" rx="3" ry="4" fill="#3d2410" />
+          <path
+            d="M120 52 Q123 55 126 52"
+            stroke="#3d2410"
+            stroke-width="2"
+            fill="none"
+            stroke-linecap="round"
+          />
+        </g>
+      </svg>
+    </button>
+
+    <span class="topbar__brand">Pokédex</span>
+
+    <button
+      class="theme-toggle"
+      type="button"
+      [attr.aria-label]="isDark() ? 'Ativar tema claro' : 'Ativar tema escuro'"
+      (click)="toggleTheme()"
+    >
+      @if (isDark()) {
+        <svg viewBox="0 0 100 100" width="30" height="30" aria-hidden="true">
+          <path
+            d="M62 68 Q78 62 82 48"
+            stroke="#e07a3f"
+            stroke-width="7"
+            stroke-linecap="round"
+            fill="none"
+          />
+          <path d="M80 6 C73 16 72 28 79 38 C87 28 89 16 83 4 Z" fill="#f06030" />
+          <path d="M80 16 C77 22 77 29 80 34 C83 28 84 22 81 15 Z" fill="#f8c838" />
+          <path d="M80 22 C79 25 79 27 80 29 C81 26 81 25 80 22 Z" fill="#fff3c4" />
+          <ellipse cx="29" cy="88" rx="7" ry="4.5" fill="#e07a3f" />
+          <ellipse cx="50" cy="88" rx="7" ry="4.5" fill="#e07a3f" />
+          <ellipse cx="40" cy="79" rx="19" ry="14" fill="#ee8130" />
+          <ellipse cx="37" cy="82" rx="11" ry="8" fill="#fac69e" />
+          <ellipse cx="23" cy="77" rx="4.5" ry="9" fill="#ee8130" transform="rotate(24 23 77)" />
+          <ellipse cx="57" cy="77" rx="4.5" ry="9" fill="#ee8130" transform="rotate(-24 57 77)" />
+          <circle cx="40" cy="42" r="25" fill="#ee8130" />
+          <path d="M22 30 C19 17 22 8 27 9 C33 14 31 24 29 32 Z" fill="#ee8130" />
+          <path d="M58 30 C61 17 58 8 53 9 C47 14 49 24 51 32 Z" fill="#ee8130" />
+          <circle cx="30" cy="40" r="6" fill="#1f2933" />
+          <circle cx="50" cy="40" r="6" fill="#1f2933" />
+          <circle cx="31.5" cy="37.5" r="2.2" fill="#ffffff" />
+          <circle cx="51.5" cy="37.5" r="2.2" fill="#ffffff" />
+          <path
+            d="M33 50 Q40 54 47 50"
+            stroke="#b45309"
+            stroke-width="2"
+            fill="none"
+            stroke-linecap="round"
+          />
+        </svg>
+      } @else {
+        <svg viewBox="0 0 100 100" width="30" height="30" aria-hidden="true">
+          <path
+            d="M66 88 Q88 78 84 60"
+            stroke="#221e3a"
+            stroke-width="8"
+            stroke-linecap="round"
+            fill="none"
+          />
+          <circle cx="83" cy="57" r="6" fill="#fbe35c" />
+          <ellipse cx="40" cy="80" rx="23" ry="19" fill="#221e3a" />
+          <path d="M32 30 C26 14 27 6 33 6 C39 9 43 22 44 32 Z" fill="#221e3a" />
+          <path d="M48 30 C54 14 53 6 47 6 C41 9 37 22 36 32 Z" fill="#221e3a" />
+          <ellipse cx="23" cy="96" rx="7" ry="5" fill="#221e3a" />
+          <ellipse cx="40" cy="97" rx="7" ry="5" fill="#221e3a" />
+          <ellipse cx="57" cy="96" rx="7" ry="5" fill="#221e3a" />
+          <ellipse cx="40" cy="38" rx="16" ry="14" fill="#221e3a" />
+          <circle cx="40" cy="27" r="3" fill="#fbe35c" />
+          <circle cx="19" cy="72" r="3.6" fill="#fbe35c" />
+          <circle cx="59" cy="72" r="3.6" fill="#fbe35c" />
+          <circle cx="22" cy="94" r="3.6" fill="#fbe35c" />
+          <circle cx="56" cy="94" r="3.6" fill="#fbe35c" />
+          <ellipse cx="33" cy="37" rx="2.6" ry="4.2" fill="#fbe35c" />
+          <ellipse cx="47" cy="37" rx="2.6" ry="4.2" fill="#fbe35c" />
+        </svg>
+      }
+    </button>
+  </header>
+
+  <section class="hero">
+    <h1 class="hero__title">Bem-vindo, Treinador!</h1>
+    <p class="hero__subtitle">Explore a Pokédex e encontre seus Pokémons favoritos.</p>
+
+    <label class="visually-hidden" for="pokemon-search">Buscar Pokémon por nome ou ID</label>
+    <input
+      id="pokemon-search"
+      class="hero__search"
+      type="search"
+      placeholder="Buscar um Pokémon por nome ou ID"
+      [value]="searchQuery()"
+      (input)="onSearchChange($any($event.target).value)"
+    />
+
+    <div class="type-grid" role="group" aria-label="Filtrar por tipo de Pokémon">
+      @for (type of pokemonTypes; track type) {
+        <button [class]="typeBtnClass(type)" type="button" (click)="onTypeChange(type)">
+          {{ typeLabel(type) }}
+        </button>
+      }
+    </div>
+
+    <button class="clear-btn" type="button" (click)="clearFilter()" [disabled]="!hasActiveFilter()">
+      Limpar filtro e mostrar todos
+    </button>
+  </section>
+
+  <main class="pokedex-main">
+    @if (globalSearchResult().length) {
+      <div class="global-result" role="status">
+        <span class="global-result__label">🔎 Encontrado na Pokédex:</span>
+        <div class="global-result__grid">
+          @for (result of globalSearchResult(); track result.id) {
+            <app-pokemon-card
+              [pokemon]="result"
+              [language]="selectedLanguage()"
+              [compareActive]="isCompareSelected(result.id)"
+              (cardClick)="onPokemonClick($event)"
+              (compareClick)="onCompareClick($event)"
+            />
+          }
+        </div>
+      </div>
+    }
+
+    @if (isLoading() && pokemonCards().length === 0) {
+      <div class="pokemon-grid" aria-hidden="true">
+        @for (skeleton of skeletonItems; track $index) {
+          <div class="skeleton-card">
+            <div class="skeleton-card__id"></div>
+            <div class="skeleton-card__image"></div>
+            <div class="skeleton-card__name"></div>
+          </div>
+        }
+      </div>
+    } @else {
+      <div class="pokemon-grid">
+        @for (card of filteredPokemon(); track card.id) {
+          <app-pokemon-card
+            [pokemon]="card"
+            [language]="selectedLanguage()"
+            [compareActive]="isCompareSelected(card.id)"
+            (cardClick)="onPokemonClick($event)"
+            (compareClick)="onCompareClick($event)"
+          />
+        } @empty {
+          <p class="pokemon-empty">Nenhum Pokémon encontrado.</p>
+        }
+      </div>
+    }
+  </main>
+
+  <footer class="pokedex-footer">
+    <span>{{ pokemonCards().length }} Pokémon</span>
+    <button type="button" (click)="onLoadMore()" [disabled]="!hasNext() || isLoading()">
+      {{ isLoading() ? 'Carregando...' : 'Carregar Mais' }}
+    </button>
+  </footer>
+</div>
+
+@if (isMenuOpen()) {
+  <div class="drawer-backdrop" (click)="closeMenu()"></div>
+  <aside class="drawer">
+    <div class="drawer__header">
+      <svg class="dugtrio-icon" viewBox="0 0 150 84" aria-hidden="true">
+        <g>
+          <ellipse cx="27" cy="42" rx="26" ry="24" fill="#a9702c" />
+          <ellipse cx="18" cy="38" rx="4" ry="5" fill="#2b1a0e" />
+          <ellipse cx="36" cy="38" rx="4" ry="5" fill="#2b1a0e" />
+          <circle cx="17" cy="36" r="1.3" fill="#ffffff" />
+          <circle cx="35" cy="36" r="1.3" fill="#ffffff" />
+          <ellipse cx="27" cy="47" rx="3" ry="4" fill="#3d2410" />
+          <path
+            d="M24 52 Q27 55 30 52"
+            stroke="#3d2410"
+            stroke-width="2"
+            fill="none"
+            stroke-linecap="round"
+          />
+        </g>
+        <g>
+          <ellipse cx="75" cy="42" rx="26" ry="24" fill="#b47c33" />
+          <ellipse cx="66" cy="38" rx="4" ry="5" fill="#2b1a0e" />
+          <ellipse cx="84" cy="38" rx="4" ry="5" fill="#2b1a0e" />
+          <circle cx="65" cy="36" r="1.3" fill="#ffffff" />
+          <circle cx="83" cy="36" r="1.3" fill="#ffffff" />
+          <ellipse cx="75" cy="47" rx="3" ry="4" fill="#3d2410" />
+          <path
+            d="M72 52 Q75 55 78 52"
+            stroke="#3d2410"
+            stroke-width="2"
+            fill="none"
+            stroke-linecap="round"
+          />
+        </g>
+        <g>
+          <ellipse cx="123" cy="42" rx="26" ry="24" fill="#9d6226" />
+          <ellipse cx="114" cy="38" rx="4" ry="5" fill="#2b1a0e" />
+          <ellipse cx="132" cy="38" rx="4" ry="5" fill="#2b1a0e" />
+          <circle cx="113" cy="36" r="1.3" fill="#ffffff" />
+          <circle cx="131" cy="36" r="1.3" fill="#ffffff" />
+          <ellipse cx="123" cy="47" rx="3" ry="4" fill="#3d2410" />
+          <path
+            d="M120 52 Q123 55 126 52"
+            stroke="#3d2410"
+            stroke-width="2"
+            fill="none"
+            stroke-linecap="round"
+          />
+        </g>
+      </svg>
+      <h2 class="drawer__title">Menu</h2>
+    </div>
+
+    <label class="language-label" for="language-select">Idioma / Language</label>
+    <select
+      id="language-select"
+      class="language-select"
+      [value]="selectedLanguage()"
+      (change)="setLanguage($any($event.target).value)"
+    >
+      <option value="pt-BR">🇧🇷 PT-BR</option>
+      <option value="en-US">🇺🇸 EN-US</option>
+      <option value="es-ES">🇪🇸 ES-ES</option>
+    </select>
+
+    <button
+      class="nav-item"
+      type="button"
+      [class.nav-item--active]="showFavoritesFilter()"
+      [attr.aria-pressed]="showFavoritesFilter()"
+      (click)="toggleFavoritesFilter()"
+    >
+      ⚡ Favoritos
+    </button>
+
+    <button
+      class="classificacoes-toggle"
+      type="button"
+      (click)="toggleClassification()"
+      [attr.aria-expanded]="isClassificationOpen()"
+    >
+      Classificações
+      <span
+        class="classificacoes-toggle__chevron"
+        [class.classificacoes-toggle__chevron--open]="isClassificationOpen()"
+      >
+        ▾
+      </span>
+    </button>
+
+    @if (isClassificationOpen()) {
+      <div class="class-tabs" role="tablist" aria-label="Classificações">
+        <button
+          class="class-tab"
+          type="button"
+          role="tab"
+          [class.class-tab--active]="classificationTab() === 'type'"
+          (click)="setClassificationTab('type')"
+        >
+          ⭐ Tipo
+        </button>
+        <button
+          class="class-tab"
+          type="button"
+          role="tab"
+          [class.class-tab--active]="classificationTab() === 'generation'"
+          (click)="setClassificationTab('generation')"
+        >
+          🌐 Geração
+        </button>
+        <button
+          class="class-tab"
+          type="button"
+          role="tab"
+          [class.class-tab--active]="classificationTab() === 'region'"
+          (click)="setClassificationTab('region')"
+        >
+          🗺️ Região
+        </button>
+      </div>
+
+      @switch (classificationTab()) {
+        @case ('type') {
+          <div class="type-grid">
+            @for (type of pokemonTypes; track type) {
+              <button [class]="typeBtnClass(type)" type="button" (click)="onTypeChange(type)">
+                {{ typeLabel(type) }}
+              </button>
+            }
+          </div>
+        }
+        @case ('generation') {
+          <div class="range-grid" role="group" aria-label="Geração">
+            @for (generation of generations; track generation.id) {
+              <button
+                class="range-btn"
+                type="button"
+                [class.range-btn--active]="selectedGeneration() === generation.id"
+                (click)="onGenerationChange(generation.id)"
+              >
+                Geração {{ generation.label }}
+                <small>#{{ generation.min }}–{{ generation.max }}</small>
+              </button>
+            }
+          </div>
+        }
+        @case ('region') {
+          <div class="range-grid" role="group" aria-label="Região">
+            @for (region of regions; track region.id) {
+              <button
+                class="range-btn"
+                type="button"
+                [class.range-btn--active]="selectedRegion() === region.id"
+                (click)="onRegionChange(region.id)"
+              >
+                {{ region.label }} <small>#{{ region.min }}–{{ region.max }}</small>
+              </button>
+            }
+          </div>
+        }
+      }
+    }
+
+    <button
+      class="classificacoes-toggle"
+      type="button"
+      (click)="toggleHighlights()"
+      [attr.aria-expanded]="isHighlightsOpen()"
+    >
+      🏆 Destaques por Geração
+      <span
+        class="classificacoes-toggle__chevron"
+        [class.classificacoes-toggle__chevron--open]="isHighlightsOpen()"
+      >
+        ▾
+      </span>
+    </button>
+
+    @if (isHighlightsOpen()) {
+      <div class="highlights" role="group" aria-label="Destaques por geração">
+        @for (highlight of highlights; track highlight.genId) {
+          <div class="highlights__item">
+            <span class="highlights__gen">Geração {{ highlight.generation }}</span>
+            <button
+              class="highlights__strong"
+              type="button"
+              (click)="openHighlight(highlight.strongestId)"
+            >
+              ⚡ Mais forte:
+              <strong>{{ highlight.strongestName }}</strong>
+              <small>#{{ highlight.strongestId }}</small>
+            </button>
+            <span class="highlights__trainer">🧢 Melhor treinador: {{ highlight.trainer }}</span>
+          </div>
+        }
+      </div>
+    }
+
+    <button class="nav-item" type="button" (click)="openQuiz()">🎮 Quiz</button>
+
+    <button class="clear-btn" type="button" (click)="clearFilter()" [disabled]="!hasActiveFilter()">
+      Limpar filtro e mostrar todos
+    </button>
+  </aside>
+}
+
+@if (isComparing() && compareSlots()[1]; as right) {
+  <div class="modal-overlay" (click)="closeCompareModal()">
+    <section class="modal modal--compare" (click)="$event.stopPropagation()">
+      <button class="modal__close" type="button" aria-label="Fechar" (click)="closeCompareModal()">
+        &times;
+      </button>
+
+      <div class="vs-grid">
+        <div class="vs-side">
+          <span class="modal__id">#{{ compareSlots()[0].id.toString().padStart(3, '0') }}</span>
+          <h2 class="vs-side__name">{{ compareSlots()[0].name }}</h2>
+          <img
+            class="vs-side__image"
+            [src]="compareSlots()[0].image"
+            [alt]="compareSlots()[0].name"
+          />
+          <div class="vs-side__types">
+            @for (type of compareSlots()[0].types; track type) {
+              <span class="modal__type" [class]="'modal__type ' + typeClass(type)">
+                {{ typeName(type) }}
+              </span>
+            }
+          </div>
+        </div>
+
+        <span class="vs-badge" aria-hidden="true">VS</span>
+
+        <div class="vs-side">
+          <span class="modal__id">#{{ right.id.toString().padStart(3, '0') }}</span>
+          <h2 class="vs-side__name">{{ right.name }}</h2>
+          <img class="vs-side__image" [src]="right.image" [alt]="right.name" />
+          <div class="vs-side__types">
+            @for (type of right.types; track type) {
+              <span class="modal__type" [class]="'modal__type ' + typeClass(type)">
+                {{ typeName(type) }}
+              </span>
+            }
+          </div>
+        </div>
+      </div>
+
+      <h3 class="modal__section-title">Atributos</h3>
+      <div class="vs-stats">
+        @for (stat of statsFor(0); track $index) {
+          <div class="vs-stat">
+            <span class="vs-stat__label">{{ stat.label }}</span>
+            <div class="vs-stat__row">
+              <div class="vs-stat__side">
+                <div class="vs-stat__bar">
+                  <div class="vs-stat__fill" [style.width.%]="stat.percent"></div>
+                </div>
+                <span class="vs-stat__value">{{ stat.value }}</span>
+              </div>
+              <div class="vs-stat__side">
+                <div class="vs-stat__bar">
+                  <div class="vs-stat__fill" [style.width.%]="statsFor(1)[$index].percent"></div>
+                </div>
+                <span class="vs-stat__value">{{ statsFor(1)[$index].value }}</span>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    </section>
+  </div>
+}
+
+@if (selectedPokemon(); as pokemon) {
+  <div class="modal-overlay" (click)="closeModal()">
+    <section class="modal" (click)="$event.stopPropagation()">
+      <button class="modal__close" type="button" aria-label="Fechar" (click)="closeModal()">
+        &times;
+      </button>
+
+      <span class="modal__id">#{{ pokemon.id.toString().padStart(3, '0') }}</span>
+      <h2 class="modal__name">{{ pokemon.name }}</h2>
+
+      <img class="modal__image" [src]="pokemon.image" [alt]="pokemon.name" />
+
+      <div class="modal__types">
+        @for (type of pokemon.types; track type) {
+          <span class="modal__type" [class]="'modal__type ' + typeClass(type)">
+            {{ typeName(type) }}
+          </span>
+        }
+      </div>
+
+      @if (pokemonDetails(); as details) {
+        <div class="modal__facts">
+          <div class="modal__fact">
+            <span class="modal__fact-label">{{ t('height') }}</span>
+            <strong>{{ details.height.toFixed(1) }} m</strong>
+          </div>
+          <div class="modal__fact">
+            <span class="modal__fact-label">{{ t('weight') }}</span>
+            <strong>{{ details.weight.toFixed(1) }} kg</strong>
+          </div>
+        </div>
+
+        <h3 class="modal__section-title">{{ t('description') }}</h3>
+        <p class="modal__description">{{ details.description }}</p>
+
+        <h3 class="modal__section-title">{{ t('stats') }}</h3>
+        <div class="modal__stats">
+          @for (stat of statList(details.stats); track $index) {
+            <div class="modal__stat">
+              <span class="modal__stat-label">{{ stat.label }}</span>
+              <div class="modal__stat-bar">
+                <div class="modal__stat-fill" [style.width.%]="stat.percent"></div>
+              </div>
+              <span class="modal__stat-value">{{ stat.value }}</span>
+            </div>
+          }
+        </div>
+
+        <h3 class="modal__section-title">{{ t('evolution') }}</h3>
+        <div class="modal__evolution">
+          @for (evo of details.evolutions; track evo.name) {
+            @if (!$first) {
+              <span class="modal__evolution-arrow" aria-hidden="true">→</span>
+            }
+            <div
+              class="modal__evolution-card"
+              [class.modal__evolution-card--current]="evo.name === details.name"
+            >
+              <img [src]="evo.image" [alt]="evo.name" />
+              <span>{{ evo.name }}</span>
+            </div>
+          }
+        </div>
+      } @else if (isDetailsLoading()) {
+        <p class="modal__loading">{{ t('loading') }}</p>
+      }
+    </section>
+  </div>
+}
+
+@if (isQuizOpen()) {
+  <app-pokemon-quiz (close)="closeQuiz()" />
+}

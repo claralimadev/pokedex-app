@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <style>
+    .glow {
+      animation: pulse 1.6s ease-in-out infinite;
+      transform-origin: 256px 256px;
+    }
+    @keyframes pulse {
+      0%, 100% {
+        opacity: 0.4;
+        transform: scale(0.92);
+      }
+      50% {
+        opacity: 1;
+        transform: scale(1.08);
+      }
+    }
+  </style>
+  <defs>
+    <radialGradient id="halo" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffe14d" stop-opacity="0.95" />
+      <stop offset="55%" stop-color="#ffb32e" stop-opacity="0.5" />
+      <stop offset="100%" stop-color="#e3350d" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  <circle class="glow" cx="256" cy="256" r="238" fill="url(#halo)" />
+  <g>
+    <circle cx="256" cy="256" r="225" fill="#f1f1f1" stroke="#2b2b2b" stroke-width="24" />
+    <path d="M 481 256 A 225 225 0 0 0 31 256 Z" fill="#e3350d" />
+    <rect x="31" y="242" width="450" height="28" fill="#2b2b2b" />
+    <circle cx="256" cy="256" r="72" fill="#f1f1f1" stroke="#2b2b2b" stroke-width="20" />
+  </g>
+</svg>

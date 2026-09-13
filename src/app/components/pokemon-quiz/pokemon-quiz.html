@@ -1,0 +1,96 @@
+<div class="quiz-overlay" role="dialog" aria-modal="true" aria-label="Who's That Pokémon?">
+  <section class="quiz" (click)="$event.stopPropagation()">
+    <button class="quiz__close" type="button" aria-label="Fechar quiz" (click)="close.emit()">
+      &times;
+    </button>
+
+    <header class="quiz__header">
+      <h2 class="quiz__title">Who's That Pokémon?</h2>
+      <div class="quiz__score">
+        <span class="quiz__score-item">🎯 {{ score() }} / {{ round() }}</span>
+        <span class="quiz__score-item quiz__score-item--best">🏆 {{ best() }}</span>
+      </div>
+    </header>
+
+    @if (isGameOver()) {
+      <div class="quiz__gameover" aria-live="polite">
+        <span class="quiz__gameover-title">💥 Game Over!</span>
+        <p class="quiz__gameover-score">
+          Você acertou <strong>{{ score() }}</strong> de {{ round() }} Pokémons.
+        </p>
+        <p class="quiz__gameover-best">
+          🏆 Recorde: <strong>{{ best() }}</strong>
+        </p>
+        <button class="quiz__retry" type="button" (click)="restart()">Tentar novamente</button>
+      </div>
+    } @else if (isLoading()) {
+      <div class="quiz__stage" aria-hidden="true">
+        <img class="quiz__stage-bg" src="images/quiz/anime-stage.jpg" alt="" />
+        <span class="quiz__stage-shade" aria-hidden="true"></span>
+        <div class="quiz__lives" aria-hidden="true">
+          @for (i of [1, 2, 3]; track i) {
+            <span class="quiz__life" [class.quiz__life--lost]="i > lives()">⚡</span>
+          }
+        </div>
+        <p class="quiz__loading">Carregando…</p>
+      </div>
+    } @else if (pokemon(); as current) {
+      <div class="quiz__stage" [class.quiz__stage--revealed]="phase() === 'reveal'">
+        <img class="quiz__stage-bg" src="images/quiz/anime-stage.jpg" alt="" aria-hidden="true" />
+        <span class="quiz__stage-shade" aria-hidden="true"></span>
+
+        @if (phase() === 'reveal') {
+          <span class="quiz__life-label" aria-live="polite">
+            {{ guess() === current.name ? '✨ Correto!' : 'Errou!' }} É o
+            <strong>{{ current.name }}</strong
+            >!
+          </span>
+        }
+
+        <div class="quiz__lives" aria-label="Vidas restantes">
+          @for (i of [1, 2, 3]; track i) {
+            <span class="quiz__life" [class.quiz__life--lost]="i > lives()">⚡</span>
+          }
+        </div>
+
+        <img
+          class="quiz__sprite quiz__sprite--silhouette"
+          [src]="current.image"
+          [alt]="phase() === 'reveal' ? current.name : 'Quem é esse Pokémon?'"
+        />
+        <img
+          class="quiz__sprite quiz__sprite--color"
+          [src]="current.image"
+          [attr.alt]="current.name"
+        />
+      </div>
+
+      <ul class="quiz__answers" aria-label="Opções de resposta">
+        @for (option of options(); track $index) {
+          <li>
+            <button
+              type="button"
+              class="quiz__answer"
+              [disabled]="phase() === 'reveal'"
+              [class.quiz__answer--correct]="phase() === 'reveal' && option === current.name"
+              [class.quiz__answer--wrong]="phase() === 'reveal' && guessedWrong(option)"
+              (click)="select(option)"
+            >
+              {{ option }}
+            </button>
+          </li>
+        }
+      </ul>
+
+      <footer class="quiz__actions">
+        @if (phase() === 'reveal') {
+          <button class="quiz__next" type="button" (click)="newQuestion()">Próximo</button>
+        } @else {
+          <button class="quiz__next quiz__next--ghost" type="button" (click)="newQuestion()">
+            Pular
+          </button>
+        }
+      </footer>
+    }
+  </section>
+</div>

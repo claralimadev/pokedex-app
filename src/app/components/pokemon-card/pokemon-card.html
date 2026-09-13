@@ -1,0 +1,35 @@
+<article class="pokemon-card" [class.shock-animation]="isShocking()" (click)="onClick()">
+  <div class="pokemon-card__header">
+    <span class="pokemon-card__id">#{{ pokemon().id.toString().padStart(3, '0') }}</span>
+    <button
+      class="pokemon-card__favorite"
+      type="button"
+      [class.pokemon-card__favorite--active]="isFavorite()"
+      [attr.aria-label]="isFavorite() ? 'Remover dos favoritos' : 'Favoritar'"
+      (click)="toggleFavorite($event)"
+    >
+      <svg class="pokemon-card__lightning" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M13 2 L4 14 h6 l-1 8 l9 -12 h-6 l1 -8 z" />
+      </svg>
+    </button>
+  </div>
+  <div class="pokemon-card__image">
+    <img [src]="pokemon().image" [alt]="pokemon().name" />
+  </div>
+  <p class="pokemon-card__name">{{ pokemon().name }}</p>
+  <div class="pokemon-card__types">
+    @for (type of pokemon().types; track type) {
+      <span class="pokemon-card__type" [class]="'pokemon-card__type ' + typeClass(type)">
+        {{ typeName(type) }}
+      </span>
+    }
+  </div>
+  <button
+    class="pokemon-card__compare"
+    type="button"
+    [class.pokemon-card__compare--active]="isCompare()"
+    (click)="toggleCompare($event)"
+  >
+    ⚔️ VS
+  </button>
+</article>
