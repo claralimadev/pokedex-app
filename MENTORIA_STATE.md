@@ -288,6 +288,16 @@
   - `aboutSkills` (chips) e seção "Sobre este projeto" descrevendo o app.
   - **Sem contato**, conforme pedido.
 
+### Fase 37 - Responsividade mobile
+
+- **src/styles.scss**: `html, body { overflow-x: hidden }` (mata rolagem horizontal) e `img, svg { max-width: 100% }` — nada mais "sai" dos containers/icons.
+- **src/app/app.scss**: badge Dugtrio encolhido de 42px → 34px (as cabecinhas saíam do botão) + bloco `@media (max-width: 479px)`:
+  - grid da página e de resultados globais em **2 colunas** fixas (`minmax(0, 1fr)`, sem estouro);
+  - espaçamentos e paddings de modal/compare menores; imagens de comparação até 110px.
+- **pokemon-quiz.scss**: `@media (max-width: 479px)` reduz padding do quiz e mantém respostas em 2 colunas.
+- **Menu centralizado no desktop**: `@media (min-width: 768px)` no `.drawer` — painel centralizado na tela (top/left 50% + translate), largura 380px, cantos arredondados e cabeçalho centralizado.
+- **Deploy do Fase 37/38 publicado no GitHub Pages** (token novo).
+
 ---
 
 ## Status Final

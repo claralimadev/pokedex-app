@@ -62,6 +62,17 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+html,
+body {
+  overflow-x: hidden;
+}
+
+img,
+svg {
+  max-width: 100%;
+  vertical-align: middle;
+}
+
 button,
 input,
 select {
