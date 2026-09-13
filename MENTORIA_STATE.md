@@ -298,6 +298,13 @@
 - **Menu centralizado no desktop**: `@media (min-width: 768px)` no `.drawer` — painel centralizado na tela (top/left 50% + translate), largura 380px, cantos arredondados e cabeçalho centralizado.
 - **Deploy do Fase 37/38 publicado no GitHub Pages** (token novo).
 
+### Fase 38 - Botão VLibras reposicionado (mobile/desktop)
+
+- **src/index.html**: script `ajustarVlibras` injeta estilos no shadowRoot do acessibily:
+  - Mobile (padrão): `bottom: 88px; right: 14px` — o botão saiu do canto esquerdo (onde o polegar toca) para a **direita**, **acima** do botão "Carregar Mais" (não fica em cima dele).
+  - Desktop (≥768px): `bottom: 24px; right: 24px`.
+- Deploy atualizado no GitHub Pages (site: 200, ajuste VLibras confirmado no bundle).
+
 ---
 
 ## Status Final

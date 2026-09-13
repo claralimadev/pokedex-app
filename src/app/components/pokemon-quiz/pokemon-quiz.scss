@@ -52,6 +52,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 0.5rem;
+  padding-right: 3rem;
 }
 
 .quiz__title {
@@ -67,6 +68,7 @@
   flex-direction: column;
   align-items: flex-end;
   gap: 0.15rem;
+  flex-shrink: 0;
 }
 
 .quiz__score-item {
@@ -372,6 +374,19 @@
   .quiz {
     padding: 1.25rem 0.75rem 0.75rem;
     gap: 0.75rem;
+  }
+
+  .quiz__header {
+    padding-right: 2.5rem;
+  }
+
+  .quiz__title {
+    font-size: 0.95rem;
+    letter-spacing: 0.02em;
+  }
+
+  .quiz__score-item {
+    font-size: 0.72rem;
   }
 
   .quiz__answers {
