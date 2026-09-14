@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, forkJoin, map, Observable, of, switchMap, tap } from 'rxjs';
 import { Pokemon, PokemonDetails, PokemonEvolution } from '../models/pokemon.model';
+import { PT_FLAVOR_TEXTS } from '../data/flavor-texts.pt';
 
 export interface NamedApiResource {
   name: string;
@@ -136,6 +137,35 @@ export class PokemonApiService {
     );
   }
 
+  getPokemonInRange(
+    min: number,
+    max: number,
+    offset = 0,
+    limit = PokemonApiService.DEFAULT_LIMIT,
+  ): Observable<PokemonPage> {
+    return this.getPokemonNameList().pipe(
+      switchMap((results) => {
+        const inRange = results.filter((item) => {
+          const match = item.url.match(/\/(\d+)\/$/);
+          if (!match) {
+            return false;
+          }
+          const id = Number(match[1]);
+          return id >= min && id <= max;
+        });
+        const batch = inRange.slice(offset, offset + limit);
+        const hasNext = offset + batch.length < inRange.length;
+        if (batch.length === 0) {
+          return of({ pokemon: [], next: null });
+        }
+        return forkJoin(batch.map((item) => this.getPokemonDetail(item.url))).pipe(
+          map((pokemon) => ({ pokemon, next: hasNext ? `${offset + limit}` : null })),
+        );
+      }),
+      catchError(() => of({ pokemon: [], next: null })),
+    );
+  }
+
   getPokemonDetails(id: number, lang = 'en'): Observable<PokemonDetails> {
     return forkJoin({
       detail: this.http.get<PokemonDetailResponse>(`${this.baseUrl}/pokemon/${id}`),
@@ -216,7 +246,7 @@ export class PokemonApiService {
       stats: this.toStats(detail),
       height: detail.height / 10,
       weight: detail.weight / 10,
-      description: this.toFlavorText(species, lang),
+      description: this.toFlavorText(detail.id, species, lang),
       evolutions,
     };
   }
@@ -249,7 +279,13 @@ export class PokemonApiService {
     };
   }
 
-  private toFlavorText(species: PokemonSpeciesResponse, lang: string): string {
+  private toFlavorText(id: number, species: PokemonSpeciesResponse, lang: string): string {
+    if (lang === 'pt') {
+      const localized = PT_FLAVOR_TEXTS[id];
+      if (localized) {
+        return localized;
+      }
+    }
     const entries = species.flavor_text_entries ?? [];
     const pick = (code: string): string | undefined =>
       entries.find((entry) => entry.language.name === code)?.flavor_text;
