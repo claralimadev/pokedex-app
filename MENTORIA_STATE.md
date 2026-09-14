@@ -322,7 +322,7 @@
 - **public/images/trainers/** (novo): sprites oficiais de treinadores do Pokémon Showdown (80×80, PNG transparente) baixados de `https://play.pokemonshowdown.com/sprites/trainers/` — `red`, `brock`, `steven` (esquerda); `ash`, `misty`, `cynthia` (direita). Hospedados localmente no app para não depender do site externo no runtime.
 - **src/app/app.html**: dois `<aside class="trainer-art trainer-art--left/right">` posicionados `position: fixed` nas laterais, com 3 `<img class="trainer-art__sprite">` espaçados a cada `18vh`, `aria-hidden` (decorativo).
 - **src/app/app.scss**: marca d'água — sprites com `opacity: 0.08` (8%), `pointer-events: none`, largura `clamp(84px, 9vw, 120px)`, `z-index: 1` (acima do vídeo −1, abaixo dos modais 30). Visíveis apenas em `@media (min-width: 1024px)` (some no mobile).
-- **src/app/app.ts**: `initTrainerParallax()` registrado no `afterNextRender` + `destroyRef.onDestroy` — no scroll (listener `passive` + `requestAnimationFrame`) aplica `translate3d(0, scrollY * 0.08px, 0)` (parallax a **8%** da rolagem, suave); com `prefers-reduced-motion: reduce` as imagens ficam estáticas.
+- **src/app/app.ts**: `initTrainerParallax()` registrado no `afterNextRender` + `destroyRef.onDestroy` — no scroll (listener `passive` + `requestAnimationFrame`) aplica `translate3d(0, scrollY * 0.08px, 0)` (parallax a **8%** da rolagem, suave). *(Na Fase 42 o bloqueio por `prefers-reduced-motion` foi removido — o usuário pediu movimento sempre.)*
 - **angular.json**: `baseHref: '/pokedex-app/'` na config de produção — corrige a quebra de deploy (o primeiro envio serviu `base href="/"` e derrubou o site; o reenvio com a base correta restaurou).
 - **Validação**: `npm run build` limpo; testes 2/2; artefatos (`images/trainers/*.png`) presentes no `dist`.
 
@@ -331,6 +331,12 @@
 - **src/app/app.scss** `.trainer-art__sprite`: maior — `clamp(120px, 13vw, 170px)` (antes 84–120px); parallax segue a 8% da rolagem; espaçamento `16vh` entre sprites.
 - **src/app/app.scss** `.modal--compare`: `padding-top: 3.5rem` — o Pokémon da coluna direita não fica mais sob o botão × de fechar a comparação.
 - **src/app/components/pokemon-quiz/pokemon-quiz.scss**: sprite de 66%→**76%** (max 250→300px), `margin-left: -21%` → **0** (centralizado na explosão) e `margin-top: 1%` → **-7%** (sobe para não encostar no rótulo do nome).
+- **Validação**: `npm run build` limpo; testes 2/2.
+
+### Fase 42 - Parallax sempre ativo + treinadores maiores
+
+- **src/app/app.ts** `initTrainerParallax()`: removido o desvio de `prefers-reduced-motion: reduce` que congelava o parallax — o usuário percebeu que as laterais não se moviam (em dispositivos com "reduzir movimento" ativo). Agora o listener de scroll é sempre registrado e as imagens rolam a 8% da rolagem em qualquer ambiente.
+- **src/app/app.scss** `.trainer-art__sprite`: maior ainda — `clamp(150px, 16vw, 210px)` (antes 120–170px); espaçamento `14vh` entre sprites; opacidade 0.08 inalterada.
 - **Validação**: `npm run build` limpo; testes 2/2.
 
 ---

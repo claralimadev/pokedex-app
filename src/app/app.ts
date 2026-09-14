@@ -211,7 +211,6 @@ export class App {
     );
     if (sprites.length === 0) return () => undefined;
 
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     let raf = 0;
     const update = () => {
       const offset = window.scrollY * 0.08;
@@ -219,11 +218,6 @@ export class App {
         sprite.style.transform = `translate3d(0, ${offset}px, 0)`;
       }
     };
-
-    if (reduceMotion) {
-      update();
-      return () => undefined;
-    }
 
     const onScroll = () => {
       cancelAnimationFrame(raf);
