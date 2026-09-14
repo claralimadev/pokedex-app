@@ -4,15 +4,27 @@
   </video>
 
   <aside class="trainer-art trainer-art--left" aria-hidden="true">
-    <img class="trainer-art__sprite" src="images/trainers/red.png" alt="" />
-    <img class="trainer-art__sprite" src="images/trainers/brock.png" alt="" />
-    <img class="trainer-art__sprite" src="images/trainers/steven.png" alt="" />
+    <div class="trainer-art__strip">
+      @for (name of trainerLoop('left'); track $index) {
+        <img
+          class="trainer-art__sprite"
+          [src]="'images/trainers/' + name + '.png'"
+          alt=""
+        />
+      }
+    </div>
   </aside>
 
   <aside class="trainer-art trainer-art--right" aria-hidden="true">
-    <img class="trainer-art__sprite" src="images/trainers/ash.png" alt="" />
-    <img class="trainer-art__sprite" src="images/trainers/misty.png" alt="" />
-    <img class="trainer-art__sprite" src="images/trainers/cynthia.png" alt="" />
+    <div class="trainer-art__strip">
+      @for (name of trainerLoop('right'); track $index) {
+        <img
+          class="trainer-art__sprite"
+          [src]="'images/trainers/' + name + '.png'"
+          alt=""
+        />
+      }
+    </div>
   </aside>
 
   <header class="topbar">

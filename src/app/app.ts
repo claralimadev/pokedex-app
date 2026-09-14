@@ -62,6 +62,37 @@ export class App {
   private readonly destroyRef = inject(DestroyRef);
   private readonly favoritesService = inject(FavoritesService);
 
+  private readonly leftTrainers = [
+    'red',
+    'brock',
+    'misty',
+    'ash',
+    'blue',
+    'green',
+    'lance',
+    'oak',
+    'cynthia',
+    'leon',
+  ];
+
+  private readonly rightTrainers = [
+    'steven',
+    'jasmine',
+    'ethan',
+    'lyra',
+    'brendan',
+    'may',
+    'wally',
+    'dawn',
+    'serena',
+    'gloria',
+  ];
+
+  trainerLoop(side: 'left' | 'right'): string[] {
+    const base = side === 'left' ? this.leftTrainers : this.rightTrainers;
+    return [...base, ...base];
+  }
+
   readonly pokemonCards = signal<Pokemon[]>([]);
   readonly searchQuery = signal('');
   readonly selectedType = signal('');
@@ -206,16 +237,20 @@ export class App {
   }
 
   private initTrainerParallax(): () => void {
-    const sprites = Array.from(
-      document.querySelectorAll<HTMLElement>('.trainer-art__sprite'),
+    const columns = Array.from(
+      document.querySelectorAll<HTMLElement>('.trainer-art'),
     );
-    if (sprites.length === 0) return () => undefined;
+    if (columns.length === 0) return () => undefined;
 
     let raf = 0;
+
     const update = () => {
-      const offset = window.scrollY * 0.08;
-      for (const sprite of sprites) {
-        sprite.style.transform = `translate3d(0, ${offset}px, 0)`;
+      for (const column of columns) {
+        const strip = column.querySelector<HTMLElement>('.trainer-art__strip');
+        if (!strip) continue;
+        const loop = Math.max(strip.offsetHeight / 2, 1);
+        const offset = (window.scrollY * 0.08) % loop;
+        strip.style.transform = `translate3d(0, ${offset}px, 0)`;
       }
     };
 
@@ -226,8 +261,10 @@ export class App {
 
     update();
     window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', update);
     return () => {
       window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', update);
       cancelAnimationFrame(raf);
     };
   }

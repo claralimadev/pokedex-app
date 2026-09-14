@@ -339,6 +339,14 @@
 - **src/app/app.scss** `.trainer-art__sprite`: maior ainda — `clamp(150px, 16vw, 210px)` (antes 120–170px); espaçamento `14vh` entre sprites; opacidade 0.08 inalterada.
 - **Validação**: `npm run build` limpo; testes 2/2.
 
+### Fase 43 - Loop de treinadores nas laterais (10 por lado)
+
+- **public/images/trainers/**: agora **20 sprites** (10 por lateral) do Pokémon Showdown — esquerda: `red, brock, misty, ash, blue, green, lance, oak, cynthia, leon`; direita: `steven, jasmine, ethan, lyra, brendan, may, wally, dawn, serena, gloria` (todas validadas HTTP 200 antes de baixar; `leaf` não existe no servidor).
+- **src/app/app.ts**: arrays `leftTrainers`/`rightTrainers` + método `trainerLoop(side)` que retorna a lista **duplicada** (10 + 10) para o giro infinito. `initTrainerParallax()` passou a calcular `offset = (scrollY * 0.08) % (strip.offsetHeight / 2)` — a faixa roda a **8%** da rolagem e, ao fim de um ciclo, **volta ao 1º treinador** (loop sem costura; `%` faz o reset automático). Também reagenda no `resize`.
+- **src/app/app.html**: cada lateral virou uma faixa `.trainer-art__strip` com `@for` sobre `trainerLoop(...)`, imagens de `images/trainers/{nome}.png`.
+- **src/app/app.scss**: `.trainer-art` agora `top:0; bottom:0; overflow:hidden`; `.trainer-art__strip` em `flex-column` com `gap: 6vh` e `will-change: transform` (sem mais `margin-bottom` manual).
+- **Validação**: `npm run build` limpo; testes 2/2; 20 PNGs no `dist`.
+
 ---
 
 ## Status Final

@@ -33,9 +33,11 @@ body.light-theme .bg-pokeball-video {
 .trainer-art {
   position: fixed;
   top: 0;
+  bottom: 0;
   z-index: 1;
   display: none;
   pointer-events: none;
+  overflow: hidden;
 
   &--left {
     left: 8px;
@@ -46,11 +48,17 @@ body.light-theme .bg-pokeball-video {
   }
 }
 
+.trainer-art__strip {
+  display: flex;
+  flex-direction: column;
+  gap: 6vh;
+  will-change: transform;
+}
+
 .trainer-art__sprite {
   display: block;
   width: clamp(150px, 16vw, 210px);
   height: auto;
-  margin-bottom: 14vh;
   opacity: 0.08;
   user-select: none;
 }
