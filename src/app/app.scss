@@ -48,9 +48,9 @@ body.light-theme .bg-pokeball-video {
 
 .trainer-art__sprite {
   display: block;
-  width: clamp(84px, 9vw, 120px);
+  width: clamp(120px, 13vw, 170px);
   height: auto;
-  margin-bottom: 18vh;
+  margin-bottom: 16vh;
   opacity: 0.08;
   user-select: none;
 }
@@ -902,6 +902,7 @@ body.light-theme .bg-pokeball-video {
 
 .modal--compare {
   width: min(100%, 720px);
+  padding-top: 3.5rem;
 }
 
 .vs-grid {

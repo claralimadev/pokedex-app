@@ -326,6 +326,13 @@
 - **angular.json**: `baseHref: '/pokedex-app/'` na config de produção — corrige a quebra de deploy (o primeiro envio serviu `base href="/"` e derrubou o site; o reenvio com a base correta restaurou).
 - **Validação**: `npm run build` limpo; testes 2/2; artefatos (`images/trainers/*.png`) presentes no `dist`.
 
+### Fase 41 - Ajustes finos (laterais, comparação, quiz)
+
+- **src/app/app.scss** `.trainer-art__sprite`: maior — `clamp(120px, 13vw, 170px)` (antes 84–120px); parallax segue a 8% da rolagem; espaçamento `16vh` entre sprites.
+- **src/app/app.scss** `.modal--compare`: `padding-top: 3.5rem` — o Pokémon da coluna direita não fica mais sob o botão × de fechar a comparação.
+- **src/app/components/pokemon-quiz/pokemon-quiz.scss**: sprite de 66%→**76%** (max 250→300px), `margin-left: -21%` → **0** (centralizado na explosão) e `margin-top: 1%` → **-7%** (sobe para não encostar no rótulo do nome).
+- **Validação**: `npm run build` limpo; testes 2/2.
+
 ---
 
 ## Status Final
