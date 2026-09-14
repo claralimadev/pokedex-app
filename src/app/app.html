@@ -6,11 +6,7 @@
   <aside class="trainer-art trainer-art--left" aria-hidden="true">
     <div class="trainer-art__strip">
       @for (name of trainerLoop('left'); track $index) {
-        <img
-          class="trainer-art__sprite"
-          [src]="'images/trainers/' + name + '.png'"
-          alt=""
-        />
+        <img class="trainer-art__sprite" [src]="'images/trainers/' + name + '.png'" alt="" />
       }
     </div>
   </aside>
@@ -18,17 +14,13 @@
   <aside class="trainer-art trainer-art--right" aria-hidden="true">
     <div class="trainer-art__strip">
       @for (name of trainerLoop('right'); track $index) {
-        <img
-          class="trainer-art__sprite"
-          [src]="'images/trainers/' + name + '.png'"
-          alt=""
-        />
+        <img class="trainer-art__sprite" [src]="'images/trainers/' + name + '.png'" alt="" />
       }
     </div>
   </aside>
 
   <header class="topbar">
-    <button class="menu-toggle" type="button" aria-label="Abrir menu" (click)="toggleMenu()">
+    <button class="menu-toggle" type="button" [attr.aria-label]="t('menu')" (click)="toggleMenu()">
       <svg class="dugtrio-icon" viewBox="0 0 150 84" aria-hidden="true">
         <g>
           <ellipse cx="27" cy="42" rx="26" ry="24" fill="#a9702c" />
@@ -83,7 +75,7 @@
     <button
       class="theme-toggle"
       type="button"
-      [attr.aria-label]="isDark() ? 'Ativar tema claro' : 'Ativar tema escuro'"
+      [attr.aria-label]="isDark() ? t('themeToLight') : t('themeToDark')"
       (click)="toggleTheme()"
     >
       @if (isDark()) {
@@ -149,20 +141,20 @@
   </header>
 
   <section class="hero">
-    <h1 class="hero__title">Bem-vindo, Treinador!</h1>
-    <p class="hero__subtitle">Explore a Pokédex e encontre seus Pokémons favoritos.</p>
+    <h1 class="hero__title">{{ t('heroTitle') }}</h1>
+    <p class="hero__subtitle">{{ t('heroSubtitle') }}</p>
 
-    <label class="visually-hidden" for="pokemon-search">Buscar Pokémon por nome ou ID</label>
+    <label class="visually-hidden" for="pokemon-search">{{ t('searchPlaceholder') }}</label>
     <input
       id="pokemon-search"
       class="hero__search"
       type="search"
-      placeholder="Buscar um Pokémon por nome ou ID"
+      [attr.placeholder]="t('searchPlaceholder')"
       [value]="searchQuery()"
       (input)="onSearchChange($any($event.target).value)"
     />
 
-    <div class="type-grid" role="group" aria-label="Filtrar por tipo de Pokémon">
+    <div class="type-grid" role="group" [attr.aria-label]="t('filterAria')">
       @for (type of pokemonTypes; track type) {
         <button [class]="typeBtnClass(type)" type="button" (click)="onTypeChange(type)">
           {{ typeLabel(type) }}
@@ -171,14 +163,14 @@
     </div>
 
     <button class="clear-btn" type="button" (click)="clearFilter()" [disabled]="!hasActiveFilter()">
-      Limpar filtro e mostrar todos
+      {{ t('clearFilter') }}
     </button>
   </section>
 
   <main class="pokedex-main">
     @if (globalSearchResult().length) {
       <div class="global-result" role="status">
-        <span class="global-result__label">🔎 Encontrado na Pokédex:</span>
+        <span class="global-result__label">{{ t('foundLabel') }}</span>
         <div class="global-result__grid">
           @for (result of globalSearchResult(); track result.id) {
             <app-pokemon-card
@@ -214,7 +206,7 @@
             (compareClick)="onCompareClick($event)"
           />
         } @empty {
-          <p class="pokemon-empty">Nenhum Pokémon encontrado.</p>
+          <p class="pokemon-empty">{{ t('empty') }}</p>
         }
       </div>
     }
@@ -223,7 +215,7 @@
   <footer class="pokedex-footer">
     <span>{{ pokemonCards().length }} Pokémon</span>
     <button type="button" (click)="onLoadMore()" [disabled]="!hasNext() || isLoading()">
-      {{ isLoading() ? 'Carregando...' : 'Carregar Mais' }}
+      {{ isLoading() ? t('loadingMore') : t('loadMore') }}
     </button>
   </footer>
 </div>
@@ -279,10 +271,10 @@
           />
         </g>
       </svg>
-      <h2 class="drawer__title">Menu</h2>
+      <h2 class="drawer__title">{{ t('menu') }}</h2>
     </div>
 
-    <label class="language-label" for="language-select">Idioma / Language</label>
+    <label class="language-label" for="language-select">{{ t('languageLabel') }}</label>
     <select
       id="language-select"
       class="language-select"
@@ -301,7 +293,7 @@
       [attr.aria-pressed]="showFavoritesFilter()"
       (click)="toggleFavoritesFilter()"
     >
-      ⚡ Favoritos
+      ⚡ {{ t('favorites') }}
     </button>
 
     <button
@@ -310,7 +302,7 @@
       (click)="toggleClassification()"
       [attr.aria-expanded]="isClassificationOpen()"
     >
-      Classificações
+      {{ t('classifications') }}
       <span
         class="classificacoes-toggle__chevron"
         [class.classificacoes-toggle__chevron--open]="isClassificationOpen()"
@@ -328,7 +320,7 @@
           [class.class-tab--active]="classificationTab() === 'type'"
           (click)="setClassificationTab('type')"
         >
-          ⭐ Tipo
+          {{ t('tabType') }}
         </button>
         <button
           class="class-tab"
@@ -337,7 +329,7 @@
           [class.class-tab--active]="classificationTab() === 'generation'"
           (click)="setClassificationTab('generation')"
         >
-          🌐 Geração
+          {{ t('tabGeneration') }}
         </button>
         <button
           class="class-tab"
@@ -346,7 +338,7 @@
           [class.class-tab--active]="classificationTab() === 'region'"
           (click)="setClassificationTab('region')"
         >
-          🗺️ Região
+          {{ t('tabRegion') }}
         </button>
       </div>
 
@@ -369,7 +361,7 @@
                 [class.range-btn--active]="selectedGeneration() === generation.id"
                 (click)="onGenerationChange(generation.id)"
               >
-                Geração {{ generation.label }}
+                {{ t('generation') }} {{ generation.label }}
                 <small>#{{ generation.min }}–{{ generation.max }}</small>
               </button>
             }
@@ -398,7 +390,7 @@
       (click)="toggleHighlights()"
       [attr.aria-expanded]="isHighlightsOpen()"
     >
-      🏆 Destaques por Geração
+      {{ t('highlights') }}
       <span
         class="classificacoes-toggle__chevron"
         [class.classificacoes-toggle__chevron--open]="isHighlightsOpen()"
@@ -417,22 +409,22 @@
               type="button"
               (click)="openHighlight(highlight.strongestId)"
             >
-              ⚡ Mais forte:
+              {{ t('strongest') }}
               <strong>{{ highlight.strongestName }}</strong>
               <small>#{{ highlight.strongestId }}</small>
             </button>
-            <span class="highlights__trainer">🧢 Melhor treinador: {{ highlight.trainer }}</span>
+            <span class="highlights__trainer">{{ t('bestTrainer') }} {{ highlight.trainer }}</span>
           </div>
         }
       </div>
     }
 
-    <button class="nav-item" type="button" (click)="openQuiz()">🎮 Quiz</button>
+    <button class="nav-item" type="button" (click)="openQuiz()">{{ t('quizMenu') }}</button>
 
-    <button class="nav-item" type="button" (click)="openAbout()">👩‍💻 Sobre mim</button>
+    <button class="nav-item" type="button" (click)="openAbout()">{{ t('aboutMenu') }}</button>
 
     <button class="clear-btn" type="button" (click)="clearFilter()" [disabled]="!hasActiveFilter()">
-      Limpar filtro e mostrar todos
+      {{ t('clearFilter') }}
     </button>
   </aside>
 }
@@ -440,7 +432,12 @@
 @if (isComparing() && compareSlots()[1]; as right) {
   <div class="modal-overlay" (click)="closeCompareModal()">
     <section class="modal modal--compare" (click)="$event.stopPropagation()">
-      <button class="modal__close" type="button" aria-label="Fechar" (click)="closeCompareModal()">
+      <button
+        class="modal__close"
+        type="button"
+        [attr.aria-label]="t('close')"
+        (click)="closeCompareModal()"
+      >
         &times;
       </button>
 
@@ -478,7 +475,7 @@
         </div>
       </div>
 
-      <h3 class="modal__section-title">Atributos</h3>
+      <h3 class="modal__section-title">{{ t('stats') }}</h3>
       <div class="vs-stats">
         <div class="vs-stat__row vs-stat__row--header">
           <span class="vs-stat__side-name">{{ compareSlots()[0].name }}</span>
@@ -524,19 +521,19 @@
             />
             <span class="vs-winner__id">#{{ outcome.winner.id.toString().padStart(3, '0') }}</span>
             <strong class="vs-winner__name">{{ outcome.winner.name }}</strong>
-            <span class="vs-winner__badge">⚡ Vencedor</span>
+            <span class="vs-winner__badge">{{ t('winnerBadge') }}</span>
           </div>
           <p class="vs-winner__reason">
-            <strong>{{ outcome.winner.name }}</strong> venceu com {{ outcome.winnerTotal }} pontos
-            no total de atributos contra {{ outcome.loserTotal }} de {{ outcome.loser.name }}.
-            @if (outcome.advantages.length) {
-              Vantagem em: {{ outcome.advantages.join(', ') }}.
+            {{ winnerSentence() }}
+            @if (compareOutcome()?.advantages.length) {
+              {{ t('advantagesIntro') }}
+              {{ compareOutcome()!.advantages.join(', ') }}.
             }
           </p>
         </div>
       } @else if (compareSlots().length === 2) {
         <p class="vs-winner__reason vs-winner__reason--tie">
-          Empate em atributos totais — nenhum dos dois leva o troféu!
+          {{ t('tie') }}
         </p>
       }
     </section>
@@ -546,7 +543,12 @@
 @if (selectedPokemon(); as pokemon) {
   <div class="modal-overlay" (click)="closeModal()">
     <section class="modal" (click)="$event.stopPropagation()">
-      <button class="modal__close" type="button" aria-label="Fechar" (click)="closeModal()">
+      <button
+        class="modal__close"
+        type="button"
+        [attr.aria-label]="t('close')"
+        (click)="closeModal()"
+      >
         &times;
       </button>
 
@@ -616,47 +618,36 @@
 @if (isAboutOpen()) {
   <div class="modal-overlay" (click)="closeAbout()">
     <section class="modal modal--about" (click)="$event.stopPropagation()">
-      <button class="modal__close" type="button" aria-label="Fechar" (click)="closeAbout()">
+      <button
+        class="modal__close"
+        type="button"
+        [attr.aria-label]="t('close')"
+        (click)="closeAbout()"
+      >
         &times;
       </button>
 
-      <span class="about__badge">👩‍💻 Sobre mim</span>
+      <span class="about__badge">{{ t('aboutBadge') }}</span>
       <h2 class="about__name">Ana Clara Lima Ribeiro</h2>
-      <p class="about__role">Desenvolvedora Front-end em formação</p>
+      <p class="about__role">{{ t('aboutRole') }}</p>
 
-      <p class="about__paragraph">
-        Sou técnica em Mecatrônica pelo SENAI e estudante de Engenharia de Software na UniAteneu.
-        Hoje integro o Squad Proenergia no Hackathon Proenergia Summit 2026, unindo a base técnica
-        de automação industrial e IoT ao universo das interfaces web modernas.
-      </p>
-      <p class="about__paragraph">
-        Minha formação em Mecatrônica me ensinou a enxergar sistemas por inteiro — do sensor ao
-        código. O que me move é construir interfaces que combinam essa precisão técnica com um
-        design que todas as pessoas consigam usar.
-      </p>
-      <p class="about__paragraph">
-        Acredito que a web precisa ser um lugar para todo mundo, por isso estudo acessibilidade e
-        inclusão todos os dias — para que nenhuma pessoa fique de fora da experiência digital.
-      </p>
+      <p class="about__paragraph">{{ t('aboutPara1') }}</p>
+      <p class="about__paragraph">{{ t('aboutPara2') }}</p>
+      <p class="about__paragraph">{{ t('aboutPara3') }}</p>
 
-      <h3 class="about__title">Minhas habilidades</h3>
+      <h3 class="about__title">{{ t('aboutSkills') }}</h3>
       <div class="about__chips">
         @for (skill of aboutSkills; track skill) {
           <span class="about__chip">{{ skill }}</span>
         }
       </div>
 
-      <h3 class="about__title">Sobre este projeto</h3>
-      <p class="about__paragraph">
-        Esta Pokédex é uma SPA feita com Angular (TypeScript e SCSS) que consome a PokéAPI: busca
-        global por nome ou número, filtros por tipo/geração/região, favoritos, comparação de
-        Pokémon, destaques por geração e um minigame de "quem é esse Pokémon?" com recorde salvo —
-        tudo com acessibilidade e o suporte de libras (VLibras).
-      </p>
+      <h3 class="about__title">{{ t('aboutProject') }}</h3>
+      <p class="about__paragraph">{{ t('aboutProjectPara') }}</p>
     </section>
   </div>
 }
 
 @if (isQuizOpen()) {
-  <app-pokemon-quiz (close)="closeQuiz()" />
+  <app-pokemon-quiz [language]="selectedLanguage()" (close)="closeQuiz()" />
 }

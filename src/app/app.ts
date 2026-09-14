@@ -18,6 +18,7 @@ import {
   typeLabel,
   typeName,
   uiString,
+  uiStringFormat,
 } from './core/i18n/pokemon-types';
 import { Pokemon, PokemonDetails, PokemonStats } from './core/models/pokemon.model';
 import { FavoritesService } from './core/services/favorites.service';
@@ -237,9 +238,7 @@ export class App {
   }
 
   private initTrainerParallax(): () => void {
-    const columns = Array.from(
-      document.querySelectorAll<HTMLElement>('.trainer-art'),
-    );
+    const columns = Array.from(document.querySelectorAll<HTMLElement>('.trainer-art'));
     if (columns.length === 0) return () => undefined;
 
     let raf = 0;
@@ -250,7 +249,7 @@ export class App {
         if (!strip) continue;
         const loop = Math.max(strip.offsetHeight / 2, 1);
         const offset = (window.scrollY * 0.08) % loop;
-        strip.style.transform = `translate3d(0, ${offset}px, 0)`;
+        strip.style.transform = `translate3d(0, ${-offset}px, 0)`;
       }
     };
 
@@ -369,6 +368,21 @@ export class App {
 
   t(key: string): string {
     return uiString(this.selectedLanguage(), key);
+  }
+
+  tf(key: string, params: Record<string, string | number>): string {
+    return uiStringFormat(this.selectedLanguage(), key, params);
+  }
+
+  winnerSentence(): string {
+    const outcome = this.compareOutcome();
+    if (!outcome) return '';
+    return this.tf('winnerSentence', {
+      w: outcome.winner.name,
+      wt: outcome.winnerTotal,
+      l: outcome.loser.name,
+      lt: outcome.loserTotal,
+    });
   }
 
   statList(stats: PokemonStats): StatBar[] {

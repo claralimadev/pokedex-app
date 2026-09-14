@@ -347,6 +347,16 @@
 - **src/app/app.scss**: `.trainer-art` agora `top:0; bottom:0; overflow:hidden`; `.trainer-art__strip` em `flex-column` com `gap: 6vh` e `will-change: transform` (sem mais `margin-bottom` manual).
 - **Validação**: `npm run build` limpo; testes 2/2; 20 PNGs no `dist`.
 
+### Fase 44 - Loop dos treinadores fluindo, i18n EN/ES completo e sprite do quiz
+
+- **src/app/app.ts** `initTrainerParallax()`: a faixa agora rola **para cima** (`translate3d(0, −offset, 0)` com `offset = (scrollY × 0.08) % loop`). Antes ela descia e o topo esvaziava ("nenhum treinador aparece"); subindo ela flui como a página, sempre preenchendo, e o `%` faz voltar ao 1º treinador sem costura.
+- **src/app/core/i18n/pokemon-types.ts**: `UI_STRINGS` expandido de 5 para ~45 chaves em pt-BR/en-US/es-ES (menu, hero, busca, filtros, classificações, destaques, comparação, sobre mim, quiz). Novos helpers `formatString()` e `uiStringFormat(lang, key, params)` para textos com `{placeholders}`.
+- **src/app/app.ts**: `tf(key, params)` (usa `uiStringFormat`) e `winnerSentence()` (monta a frase do vencedor no idioma atual).
+- **src/app/app.html**: todos os textos fixos trocados por `t()`/`tf()` — hero, placeholder, botão limpar, grid vazio, footer, drawer (menu/idioma/favoritos/classificações/abas/geração/destaques/quiz/sobre), modais de comparação (fechar, vencedor, empate), detalhes e "Sobre mim" (parágrafos + seções).
+- **src/app/components/pokemon-quiz/***: novo input `language` (passado de `app.html`), método `t`/`tf` — título, botão fechar, game over, recorde, retry, loading, correto/errou, `É o {n}!`, vidas, próximo/pular tudo traduzido.
+- **src/app/components/pokemon-quiz/pokemon-quiz.scss**: sprite com `margin-left: -14%` (um pouco mais à esquerda, sem voltar ao extremo de -21%).
+- **Validação**: build limpo, Prettier aplicado, testes 2/2.
+
 ---
 
 ## Status Final

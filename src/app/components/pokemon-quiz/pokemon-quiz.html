@@ -1,11 +1,16 @@
-<div class="quiz-overlay" role="dialog" aria-modal="true" aria-label="Who's That Pokémon?">
+<div class="quiz-overlay" role="dialog" aria-modal="true" [attr.aria-label]="t('quizAria')">
   <section class="quiz" (click)="$event.stopPropagation()">
-    <button class="quiz__close" type="button" aria-label="Fechar quiz" (click)="close.emit()">
+    <button
+      class="quiz__close"
+      type="button"
+      [attr.aria-label]="t('closeQuiz')"
+      (click)="close.emit()"
+    >
       &times;
     </button>
 
     <header class="quiz__header">
-      <h2 class="quiz__title">Who's That Pokémon?</h2>
+      <h2 class="quiz__title">{{ t('quizAria') }}</h2>
       <div class="quiz__score">
         <span class="quiz__score-item">🎯 {{ score() }} / {{ round() }}</span>
         <span class="quiz__score-item quiz__score-item--best">🏆 {{ best() }}</span>
@@ -16,12 +21,12 @@
       <div class="quiz__gameover" aria-live="polite">
         <span class="quiz__gameover-title">💥 Game Over!</span>
         <p class="quiz__gameover-score">
-          Você acertou <strong>{{ score() }}</strong> de {{ round() }} Pokémons.
+          {{ tf('gameOverScore', { s: score(), r: round() }) }}
         </p>
         <p class="quiz__gameover-best">
-          🏆 Recorde: <strong>{{ best() }}</strong>
+          {{ t('record') }} <strong>{{ best() }}</strong>
         </p>
-        <button class="quiz__retry" type="button" (click)="restart()">Tentar novamente</button>
+        <button class="quiz__retry" type="button" (click)="restart()">{{ t('retry') }}</button>
       </div>
     } @else if (isLoading()) {
       <div class="quiz__stage" aria-hidden="true">
@@ -32,7 +37,7 @@
             <span class="quiz__life" [class.quiz__life--lost]="i > lives()">⚡</span>
           }
         </div>
-        <p class="quiz__loading">Carregando…</p>
+        <p class="quiz__loading">{{ t('quizLoading') }}</p>
       </div>
     } @else if (pokemon(); as current) {
       <div class="quiz__stage" [class.quiz__stage--revealed]="phase() === 'reveal'">
@@ -41,13 +46,12 @@
 
         @if (phase() === 'reveal') {
           <span class="quiz__life-label" aria-live="polite">
-            {{ guess() === current.name ? '✨ Correto!' : 'Errou!' }} É o
-            <strong>{{ current.name }}</strong
-            >!
+            {{ guess() === current.name ? t('correct') : t('wrong') }}
+            {{ tf('isThe', { n: current.name }) }}
           </span>
         }
 
-        <div class="quiz__lives" aria-label="Vidas restantes">
+        <div class="quiz__lives" [attr.aria-label]="t('livesLabel')">
           @for (i of [1, 2, 3]; track i) {
             <span class="quiz__life" [class.quiz__life--lost]="i > lives()">⚡</span>
           }
@@ -56,7 +60,7 @@
         <img
           class="quiz__sprite quiz__sprite--silhouette"
           [src]="current.image"
-          [alt]="phase() === 'reveal' ? current.name : 'Quem é esse Pokémon?'"
+          [attr.alt]="phase() === 'reveal' ? current.name : t('quizAria')"
         />
         <img
           class="quiz__sprite quiz__sprite--color"
@@ -84,10 +88,10 @@
 
       <footer class="quiz__actions">
         @if (phase() === 'reveal') {
-          <button class="quiz__next" type="button" (click)="newQuestion()">Próximo</button>
+          <button class="quiz__next" type="button" (click)="newQuestion()">{{ t('next') }}</button>
         } @else {
           <button class="quiz__next quiz__next--ghost" type="button" (click)="newQuestion()">
-            Pular
+            {{ t('skip') }}
           </button>
         }
       </footer>

@@ -1,4 +1,5 @@
-import { Component, inject, output, signal } from '@angular/core';
+import { Component, inject, input, output, signal } from '@angular/core';
+import { DEFAULT_LOCALE, Locale, uiString, uiStringFormat } from '../../core/i18n/pokemon-types';
 import { Pokemon } from '../../core/models/pokemon.model';
 import { PokemonApiService } from '../../core/services/pokemon-api.service';
 
@@ -45,6 +46,7 @@ type Phase = 'guessing' | 'reveal';
 })
 export class PokemonQuiz {
   readonly close = output<void>();
+  readonly language = input<Locale>(DEFAULT_LOCALE);
 
   private readonly api = inject(PokemonApiService);
 
@@ -111,6 +113,14 @@ export class PokemonQuiz {
 
   guessedWrong(option: string): boolean {
     return this.phase() === 'reveal' && option === this.guess() && option !== this.pokemon()?.name;
+  }
+
+  t(key: string): string {
+    return uiString(this.language(), key);
+  }
+
+  tf(key: string, params: Record<string, string | number>): string {
+    return uiStringFormat(this.language(), key, params);
   }
 
   private pending: Pokemon | null = null;
