@@ -30,6 +30,37 @@ body.light-theme .bg-pokeball-video {
   filter: brightness(1.1);
 }
 
+.trainer-art {
+  position: fixed;
+  top: 0;
+  z-index: 1;
+  display: none;
+  pointer-events: none;
+
+  &--left {
+    left: 8px;
+  }
+
+  &--right {
+    right: 8px;
+  }
+}
+
+.trainer-art__sprite {
+  display: block;
+  width: clamp(84px, 9vw, 120px);
+  height: auto;
+  margin-bottom: 18vh;
+  opacity: 0.08;
+  user-select: none;
+}
+
+@media (min-width: 1024px) {
+  .trainer-art {
+    display: block;
+  }
+}
+
 .app-shell {
   display: flex;
   flex-direction: column;

@@ -33,6 +33,7 @@
           },
           "configurations": {
             "production": {
+              "baseHref": "/pokedex-app/",
               "budgets": [
                 {
                   "type": "anyComponentStyle",

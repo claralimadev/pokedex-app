@@ -201,7 +201,41 @@ export class App {
           video.playbackRate = 0.45;
         }
       }
+      this.destroyRef.onDestroy(this.initTrainerParallax());
     });
+  }
+
+  private initTrainerParallax(): () => void {
+    const sprites = Array.from(
+      document.querySelectorAll<HTMLElement>('.trainer-art__sprite'),
+    );
+    if (sprites.length === 0) return () => undefined;
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let raf = 0;
+    const update = () => {
+      const offset = window.scrollY * 0.08;
+      for (const sprite of sprites) {
+        sprite.style.transform = `translate3d(0, ${offset}px, 0)`;
+      }
+    };
+
+    if (reduceMotion) {
+      update();
+      return () => undefined;
+    }
+
+    const onScroll = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(update);
+    };
+
+    update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      cancelAnimationFrame(raf);
+    };
   }
 
   toggleTheme(): void {

@@ -317,6 +317,15 @@
 - **angular.json**: orçamento `anyComponentStyle` de 16kB → **20kB** (warning) / 24kB (error) devido aos estilos do vencedor (build limpo, sem warnings).
 - **Validação**: `npm run build` (produção) sem erros/warnings; testes unitários passando 2/2.
 
+### Fase 40 - Treinadores nas laterais (sprites Pokémon Showdown + parallax)
+
+- **public/images/trainers/** (novo): sprites oficiais de treinadores do Pokémon Showdown (80×80, PNG transparente) baixados de `https://play.pokemonshowdown.com/sprites/trainers/` — `red`, `brock`, `steven` (esquerda); `ash`, `misty`, `cynthia` (direita). Hospedados localmente no app para não depender do site externo no runtime.
+- **src/app/app.html**: dois `<aside class="trainer-art trainer-art--left/right">` posicionados `position: fixed` nas laterais, com 3 `<img class="trainer-art__sprite">` espaçados a cada `18vh`, `aria-hidden` (decorativo).
+- **src/app/app.scss**: marca d'água — sprites com `opacity: 0.08` (8%), `pointer-events: none`, largura `clamp(84px, 9vw, 120px)`, `z-index: 1` (acima do vídeo −1, abaixo dos modais 30). Visíveis apenas em `@media (min-width: 1024px)` (some no mobile).
+- **src/app/app.ts**: `initTrainerParallax()` registrado no `afterNextRender` + `destroyRef.onDestroy` — no scroll (listener `passive` + `requestAnimationFrame`) aplica `translate3d(0, scrollY * 0.08px, 0)` (parallax a **8%** da rolagem, suave); com `prefers-reduced-motion: reduce` as imagens ficam estáticas.
+- **angular.json**: `baseHref: '/pokedex-app/'` na config de produção — corrige a quebra de deploy (o primeiro envio serviu `base href="/"` e derrubou o site; o reenvio com a base correta restaurou).
+- **Validação**: `npm run build` limpo; testes 2/2; artefatos (`images/trainers/*.png`) presentes no `dist`.
+
 ---
 
 ## Status Final
