@@ -1,59 +1,68 @@
-# PokedexApp
+# Pokédex — Angular 🎯
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.1.8.
+Uma **Pokédex interativa** feita com **Angular 22** (TypeScript e SCSS) consumindo a [PokéAPI](https://pokeapi.co/). É uma SPA completa, responsiva e acessível, com suporte a **Libras (VLibras)**.
 
-## Development server
+## 🔗 Acesse o projeto
 
-To start a local development server, run:
+### **https://claralimadev.github.io/pokedex-app/**
+
+---
+
+## ✨ Funcionalidades
+
+- **Listagem em grid responsivo** com cards (#ID, nome, imagem e tipos).
+- **Busca global** por nome ou número (com debounce), inclusive fora da lista carregada.
+- **Filtros por tipo, geração e região** — carregando os primeiros 12 Pokémons da classificação direto da API, com "Carregar Mais".
+- **Favoritos** ⚡ salvos no `localStorage`.
+- **Comparação de Pokémons** (batalha 🆚) com barras por atributo, destaque em ouro do vencedor por stat e **coroação do vencedor** 🏆 (total de atributos).
+- **Destaques por Geração** 🧢 (o mais forte e o melhor treinador de cada geração).
+- **Minigame "Quem é esse Pokémon?"** 🎮 com 3 vidas, contagem de recorde e efeito de "explosão" na revelação.
+- **Modal de detalhes** com altura, peso, descrição (PT-BR, EN e ES), stats e linha evolutiva.
+- **Tema claro/escuro** 🌗 e **idiomas 🇧🇷 / 🇺🇸 / 🇪🇸**.
+- **Acessibilidade**: navegação por teclado, `aria`, contraste e **VLibras** para LIBRAS.
+- **Treinadores nas laterais** (sprites do Pokémon Showdown) com marcas d'água em parallax de 8%.
+
+---
+
+## 🛠️ Tecnologias
+
+- **Angular 22** (standalone components, `signals`, control flow `@if/@for`)
+- TypeScript + SCSS
+- [PokéAPI](https://pokeapi.co/)
+- Vitest (testes unitários)
+- Hospedagem: **GitHub Pages**
+
+---
+
+## 🚀 Rodando localmente
 
 ```bash
+npm install
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Abra `http://localhost:4200/`.
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
+### Build de produção
 
 ```bash
 ng build
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Os artefatos ficam em `dist/pokedex-app/browser` (direcionado ao GitHub Pages com `baseHref="/pokedex-app/"`).
 
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+### Testes
 
 ```bash
 ng test
 ```
 
-## Running end-to-end tests
+---
 
-For end-to-end (e2e) testing, run:
+## 👩‍💻 Sobre a autora
 
-```bash
-ng e2e
-```
+Feito por **Ana Clara Lima Ribeiro** — técnica em Mecatrônica (SENAI) e estudante de Engenharia de Software (UniAteneu), apaixonada por interfaces acessíveis e inclusion.
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+---
 
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+**Projeto de estudo/mentoria** — me acompanhe também em: [GitHub](https://github.com/claralimadev)
