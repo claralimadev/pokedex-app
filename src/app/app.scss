@@ -475,9 +475,11 @@ body.light-theme .bg-pokeball-video {
 }
 
 .modal__close {
-  position: absolute;
+  position: sticky;
   top: 0.5rem;
-  right: 0.5rem;
+  margin-left: auto;
+  flex-shrink: 0;
+  z-index: 5;
   display: grid;
   place-items: center;
   width: 2.5rem;
@@ -910,7 +912,6 @@ body.light-theme .bg-pokeball-video {
 
 .modal--compare {
   width: min(100%, 720px);
-  padding-top: 3.5rem;
   text-align: center;
 }
 

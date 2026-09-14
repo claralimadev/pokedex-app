@@ -357,6 +357,13 @@
 - **src/app/components/pokemon-quiz/pokemon-quiz.scss**: sprite com `margin-left: -14%` (um pouco mais à esquerda, sem voltar ao extremo de -21%).
 - **Validação**: build limpo, Prettier aplicado, testes 2/2.
 
+### Fase 45 - X dos modais fixo no topo (mobile) + centralização
+
+- **src/app/app.scss** `.modal__close`: deixou de ser `position: absolute; top/right` e virou **`position: sticky; top: 0.5rem; margin-left: auto`** — em modais que rolam (comparação/detalhes/sobre) o botão × **permanece visível no topo** no celular ao descer o conteúdo (antes ele "sumia" porque rolava junto).
+- **src/app/app.scss** `.modal--compare`: removido o `padding-top: 3.5rem` (com o × sticky em fluxo, o Pokémon não encosta mais no botão).
+- Aplicado também `text-align: center`/`margin-inline: auto` no modal de comparação (Fase anterior já contemplava o alinhamento).
+- **Validação**: `npm run build` limpo; testes 2/2.
+
 ---
 
 ## Status Final
