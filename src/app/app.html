@@ -456,26 +456,65 @@
 
       <h3 class="modal__section-title">Atributos</h3>
       <div class="vs-stats">
-        @for (stat of statsFor(0); track $index) {
+        <div class="vs-stat__row vs-stat__row--header">
+          <span class="vs-stat__side-name">{{ compareSlots()[0].name }}</span>
+          <span class="vs-stat__side-name">{{ right.name }}</span>
+        </div>
+        @for (row of compareRows(); track row.label) {
           <div class="vs-stat">
-            <span class="vs-stat__label">{{ stat.label }}</span>
+            <span class="vs-stat__label">{{ row.label }}</span>
             <div class="vs-stat__row">
-              <div class="vs-stat__side">
+              <div class="vs-stat__side" [class.vs-stat__side--win]="row.winner === 'A'">
                 <div class="vs-stat__bar">
-                  <div class="vs-stat__fill" [style.width.%]="stat.percent"></div>
+                  <div
+                    class="vs-stat__fill"
+                    [style.width.%]="row.percentA"
+                    [class.vs-stat__fill--win]="row.winner === 'A'"
+                  ></div>
                 </div>
-                <span class="vs-stat__value">{{ stat.value }}</span>
+                <span class="vs-stat__value">{{ row.valueA }}</span>
               </div>
-              <div class="vs-stat__side">
+              <div class="vs-stat__side" [class.vs-stat__side--win]="row.winner === 'B'">
                 <div class="vs-stat__bar">
-                  <div class="vs-stat__fill" [style.width.%]="statsFor(1)[$index].percent"></div>
+                  <div
+                    class="vs-stat__fill"
+                    [style.width.%]="row.percentB"
+                    [class.vs-stat__fill--win]="row.winner === 'B'"
+                  ></div>
                 </div>
-                <span class="vs-stat__value">{{ statsFor(1)[$index].value }}</span>
+                <span class="vs-stat__value">{{ row.valueB }}</span>
               </div>
             </div>
           </div>
         }
       </div>
+
+      @if (compareOutcome(); as outcome) {
+        <div class="vs-winner">
+          <div class="vs-winner__card">
+            <span class="vs-winner__trophy" aria-hidden="true">🏆</span>
+            <img
+              class="vs-winner__image"
+              [src]="outcome.winner.image"
+              [alt]="outcome.winner.name"
+            />
+            <span class="vs-winner__id">#{{ outcome.winner.id.toString().padStart(3, '0') }}</span>
+            <strong class="vs-winner__name">{{ outcome.winner.name }}</strong>
+            <span class="vs-winner__badge">⚡ Vencedor</span>
+          </div>
+          <p class="vs-winner__reason">
+            <strong>{{ outcome.winner.name }}</strong> venceu com {{ outcome.winnerTotal }} pontos
+            no total de atributos contra {{ outcome.loserTotal }} de {{ outcome.loser.name }}.
+            @if (outcome.advantages.length) {
+              Vantagem em: {{ outcome.advantages.join(', ') }}.
+            }
+          </p>
+        </div>
+      } @else if (compareSlots().length === 2) {
+        <p class="vs-winner__reason vs-winner__reason--tie">
+          Empate em atributos totais — nenhum dos dois leva o troféu!
+        </p>
+      }
     </section>
   </div>
 }

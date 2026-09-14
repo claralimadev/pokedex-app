@@ -305,6 +305,18 @@
   - Desktop (≥768px): `bottom: 24px; right: 24px`.
 - Deploy atualizado no GitHub Pages (site: 200, ajuste VLibras confirmado no bundle).
 
+### Fase 39 - Descrição PT-BR, carregamento por Geração/Região e Comparação com Vencedor
+
+- **src/app/core/data/flavor-texts.pt.ts** (novo): dicionário local de descrições em PT-BR para os 151 de Kanto (`PT_FLAVOR_TEXTS` chaveado por ID). A PokéAPI **não possui** flavor text `pt` para a maioria das espécies (confirmado via inspeção da API para #1 e #25); o app hoje caía para `en`.
+- **src/app/core/services/pokemon-api.service.ts**: `toFlavorText(id, species, lang)` — quando `lang === 'pt'`, consulta o dicionário local antes do fallback da API (lançado: `lang → en → entries[0]`).
+- **src/app/core/services/pokemon-api.service.ts**: novo `getPokemonInRange(min, max, offset)` — usa a lista de nomes cacheada, filtra por faixa de ID, aplica offset 12 em 12 e devolve `PokemonPage` (permite "Carregar Mais" dentro da geração/região).
+- **src/app/app.ts**: campo privado `range: IdRange | null` — `loadPokemon()` prioriza tipo → faixa → lista geral. `onGenerationChange`/`onRegionChange` agora **recarregam da API os primeiros 12 Pokémon da classificação** (antes apenas filtravam localmente), limpam o filtro concorrente (tipo/geração/região são mutuamente exclusivos), e clicar no item já ativo **destiva** o filtro (toggle). `clearFilter()` também zera `range`.
+- **src/app/app.ts**: computeds `compareRows` (linhas HP/ATK/DEF/SPA/SPD/VEL com `winner: 'A' | 'B' | 'tie'`) e `compareOutcome` (vencedor por **total de atributos**, com pontos totais, perdedor e vantagens por stat). `statTotal()` soma os 6 stats. Removido o método `statsFor`.
+- **src/app/app.html** (modal de comparação): cabeçalho das colunas com o nome de cada Pokémon (`vs-stat__side-name`); barra/valor do lado vencedor em ouro por stat; ao final, cartão do vencedor com **moldura dourada animada**, **troféu 🏆**, imagem, `#número`, nome e badge "⚡ Vencedor", seguido da explicação (total de pontos de cada lado + em quais atributos levou vantagem). Empate em totais exibe mensagem própria.
+- **src/app/app.scss**: estilos de `vs-stat__row--header`, `vs-stat__side-name`, `vs-stat__side--win`/`vs-stat__fill--win` (ouro `#e6a817/#ffcc00`), `.vs-winner*` (card dourado com `winner-glow`, troféu flutuante) e `.vs-winner__reason`. Recomendado `prefers-reduced-motion` para o glow do troféu.
+- **angular.json**: orçamento `anyComponentStyle` de 16kB → **20kB** (warning) / 24kB (error) devido aos estilos do vencedor (build limpo, sem warnings).
+- **Validação**: `npm run build` (produção) sem erros/warnings; testes unitários passando 2/2.
+
 ---
 
 ## Status Final

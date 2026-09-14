@@ -34,6 +34,23 @@ interface StatBar {
   percent: number;
 }
 
+interface CompareRow {
+  label: string;
+  valueA: number;
+  valueB: number;
+  percentA: number;
+  percentB: number;
+  winner: 'A' | 'B' | 'tie';
+}
+
+interface CompareOutcome {
+  winner: Pokemon;
+  loser: Pokemon;
+  winnerTotal: number;
+  loserTotal: number;
+  advantages: string[];
+}
+
 @Component({
   imports: [PokemonCard, PokemonQuiz],
   selector: 'app-root',
@@ -90,6 +107,7 @@ export class App {
   private detailsToken = 0;
   private searchToken = 0;
   private searchTimer = 0;
+  private range: IdRange | null = null;
 
   readonly hasActiveFilter = computed(
     () =>
@@ -120,6 +138,55 @@ export class App {
 
       return matchesQuery && matchesType && matchesGeneration && matchesRegion && matchesFavorites;
     });
+  });
+
+  readonly compareRows = computed<CompareRow[]>(() => {
+    const slots = this.compareSlots();
+    if (slots.length < 2) {
+      return [];
+    }
+    const [left, right] = slots;
+    const leftBars = this.statList(left.stats);
+    const rightBars = this.statList(right.stats);
+    return leftBars.map((bar, index) => {
+      const valueA = bar.value;
+      const valueB = rightBars[index].value;
+      const winner = valueA > valueB ? 'A' : valueB > valueA ? 'B' : 'tie';
+      return {
+        label: bar.label,
+        valueA,
+        valueB,
+        percentA: bar.percent,
+        percentB: rightBars[index].percent,
+        winner,
+      };
+    });
+  });
+
+  readonly compareOutcome = computed<CompareOutcome | null>(() => {
+    const slots = this.compareSlots();
+    if (slots.length < 2) {
+      return null;
+    }
+    const [left, right] = slots;
+    const totalA = this.statTotal(left.stats);
+    const totalB = this.statTotal(right.stats);
+    if (totalA === totalB) {
+      return null;
+    }
+    const winner = totalA > totalB ? left : right;
+    const loser = totalA > totalB ? right : left;
+    const winnerSide = totalA > totalB ? 'A' : 'B';
+    const advantages = this.compareRows()
+      .filter((row) => row.winner === winnerSide)
+      .map((row) => row.label);
+    return {
+      winner,
+      loser,
+      winnerTotal: Math.max(totalA, totalB),
+      loserTotal: Math.min(totalA, totalB),
+      advantages,
+    };
   });
 
   constructor() {
@@ -224,9 +291,15 @@ export class App {
     return parts.join(' ');
   }
 
-  statsFor(index: number): StatBar[] {
-    const pokemon = this.compareSlots()[index];
-    return pokemon ? this.statList(pokemon.stats) : [];
+  statTotal(stats: PokemonStats): number {
+    return (
+      stats.hp +
+      stats.attack +
+      stats.defense +
+      stats.specialAttack +
+      stats.specialDefense +
+      stats.speed
+    );
   }
 
   t(key: string): string {
@@ -283,7 +356,9 @@ export class App {
     this.isLoading.set(true);
     const request$ = this.selectedType()
       ? this.api.getPokemonByType(this.selectedType(), this.offset)
-      : this.api.getPokemonPage(this.offset);
+      : this.range
+        ? this.api.getPokemonInRange(this.range.min, this.range.max, this.offset)
+        : this.api.getPokemonPage(this.offset);
 
     request$.subscribe({
       next: ({ pokemon, next }) => {
@@ -350,16 +425,27 @@ export class App {
   }
 
   onTypeChange(type: string): void {
-    this.selectedType.set(type);
+    this.selectedType.update((current) => (current === type ? '' : type));
+    this.selectedGeneration.set('');
+    this.selectedRegion.set('');
+    this.range = null;
     this.resetAndLoad();
   }
 
   onGenerationChange(id: string): void {
-    this.selectedGeneration.set(id);
+    this.selectedGeneration.update((current) => (current === id ? '' : id));
+    this.selectedType.set('');
+    this.selectedRegion.set('');
+    this.range = this.selectedRange(this.selectedGeneration(), GENERATIONS);
+    this.resetAndLoad();
   }
 
   onRegionChange(id: string): void {
-    this.selectedRegion.set(id);
+    this.selectedRegion.update((current) => (current === id ? '' : id));
+    this.selectedType.set('');
+    this.selectedGeneration.set('');
+    this.range = this.selectedRange(this.selectedRegion(), REGIONS);
+    this.resetAndLoad();
   }
 
   clearFilter(): void {
@@ -368,6 +454,7 @@ export class App {
     this.selectedType.set('');
     this.selectedGeneration.set('');
     this.selectedRegion.set('');
+    this.range = null;
     this.showFavoritesFilter.set(false);
     this.resetAndLoad();
   }
