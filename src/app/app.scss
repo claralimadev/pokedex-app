@@ -807,8 +807,9 @@ body.light-theme .bg-pokeball-video {
 
 .range-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 130px), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 120px), 1fr));
   gap: 0.5rem;
+  width: 100%;
 }
 
 .range-btn {
@@ -817,19 +818,25 @@ body.light-theme .bg-pokeball-video {
   align-items: center;
   gap: 0.15rem;
   min-height: 48px;
-  padding: 0.5rem 0.75rem;
+  padding: 0.5rem 0.6rem;
   font-size: 0.82rem;
   font-weight: 600;
+  text-align: center;
   color: var(--color-text);
   background-color: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: 0.75rem;
+  overflow: hidden;
   cursor: pointer;
   touch-action: manipulation;
 
   small {
+    max-width: 100%;
     font-size: 0.68rem;
     font-weight: 500;
+    line-height: 1.15;
+    white-space: normal;
+    overflow-wrap: anywhere;
     color: var(--color-text-muted);
   }
 
